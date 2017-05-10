@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using DicomCore;
 using Microsoft.AspNetCore.Mvc;
+using System.Linq;
 
 // For more information on enabling Web API for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -18,20 +19,21 @@ namespace Worklist_Server.Controllers
 
         // GET api/worklistitems/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public DicomConvertedItem Get(string id)
         {
-            return "value";
+            return Configuration.MyCollection.SingleOrDefault(i => i.Id == id);
         }
 
         // POST api/worklistitems
         [HttpPost]
-        public void Post([FromBody]string value)
+        public void Post([FromBody]DicomConvertedItem value)
         {
+            Configuration.MyCollection.Add(value);
         }
 
         // PUT api/worklistitems/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody]string value)
+        public void Put(int id, [FromBody]DicomConvertedItem value)
         {
         }
 
