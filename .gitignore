@@ -1,0 +1,5 @@
+src/Worklist-Server/obj/
+src/Worklist-Server/bin/
+src/DicomCore/obj/
+src/DicomCore/bin/
+.vs/
