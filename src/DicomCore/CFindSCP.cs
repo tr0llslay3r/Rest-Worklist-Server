@@ -18,6 +18,7 @@ namespace DicomCore
 
         public void OnReceiveAssociationRequest(DicomAssociation association)
         {
+            // TODO make this AE Title configurable via command line parameter or config
             //if (association.CalledAE != "TEST_AE_WORKLIST")
             //{
             //    SendAssociationReject(
