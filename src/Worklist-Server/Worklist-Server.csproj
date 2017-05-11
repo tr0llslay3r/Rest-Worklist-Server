@@ -13,7 +13,6 @@
   <ItemGroup>
     <Content Include="wwwroot\js\app.js" />
     <Content Include="wwwroot\js\controller.js" />
-    <Content Include="wwwroot\js\controller1.js" />
   </ItemGroup>
 
   <ItemGroup>

@@ -89,25 +89,22 @@ namespace DicomCore
 
         private static void UpdateMppsStatusInLocalCollections(DicomRequest request)
         {
-            var log = new StringBuilder();
-            IDicomDatasetWalker walkerTexasRanger = new DicomDatasetDumper(log);
-            new DicomDatasetWalker(request.Dataset).Walk(walkerTexasRanger);
             var description = string.Format("{0} -> {1}", request.Dataset.Get<string>(DicomTag.PatientID), request.Dataset.Get<string>(DicomTag.PerformedProcedureStepStatus));
-
-            Configuration.LogList.Add(new LogItem() {Description = description, Item = log.ToString()});
+            
             var patientId = request.Dataset.Get<string>(DicomTag.PatientID);
             var status = request.Dataset.Get<string>(DicomTag.PerformedProcedureStepStatus);
 
             var item = Configuration.WorklistItems.Single(w => w.Get<string>(DicomTag.PatientID).Equals(patientId));
 
-            item.Add(DicomTag.PerformedProcedureStepStatus, status);
+            item.AddOrUpdate(DicomTag.PerformedProcedureStepStatus, status);
 
             SetMppsStatusFromItem(item);
         }
 
         private static void SetMppsStatusFromItem(DicomDataset item)
         {
-            Configuration.MyCollection.Single(o => o.Id.Equals(item.Get<string>(DicomTag.PatientID))).Status =
+            //TODO: modify the real list (Configuration.WorklistItems), not the readonly dumped list
+            Configuration.GetReadableWorklistItems().Single(o => o["Id"].Equals(item.Get<string>(DicomTag.PatientID)))["Status"] =
                 item.Get<string>(DicomTag.PerformedProcedureStepStatus);
         }
 

@@ -32,11 +32,11 @@ namespace Worklist_Server.Controllers
             return log.ToString();
         }
 
-        // GET api/dicomdump/id
-        [HttpGet("{id}")]
-        public string Get(string id)
+        // GET api/dicomdump/patientid
+        [HttpGet("{patientid}")]
+        public string Get(string patientid)
         {
-            var dataset = Configuration.WorklistItems.FirstOrDefault(i => i.Get<string>(DicomTag.PatientID) == id);
+            var dataset = Configuration.WorklistItems.FirstOrDefault(i => i.Get<string>(DicomTag.PatientID) == patientid);
             
             var log = new StringBuilder();
             IDicomDatasetWalker walkerTexasRanger = new DicomDatasetDumper(log);

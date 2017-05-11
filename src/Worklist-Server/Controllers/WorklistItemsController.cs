@@ -12,28 +12,28 @@ namespace Worklist_Server.Controllers
     {
         // GET: api/worklistitems
         [HttpGet]
-        public IEnumerable<DicomConvertedItem> Get()
+        public IEnumerable<Dictionary<string, string>> Get()
         {
-            return Configuration.MyCollection;
+            return Configuration.GetReadableWorklistItems();
         }
 
         // GET api/worklistitems/5
         [HttpGet("{id}")]
-        public DicomConvertedItem Get(string id)
+        public Dictionary<string, string> Get(string id)
         {
-            return Configuration.MyCollection.SingleOrDefault(i => i.Id == id);
+            return Configuration.GetReadableWorklistItems().SingleOrDefault(i => i["Id"] == id);
         }
 
         // POST api/worklistitems
         [HttpPost]
-        public void Post([FromBody]DicomConvertedItem value)
+        public void Post([FromBody]Dictionary<string, string> value)
         {
-            Configuration.MyCollection.Add(value);
+            Configuration.GetReadableWorklistItems().Add(value);
         }
 
         // PUT api/worklistitems/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody]DicomConvertedItem value)
+        public void Put(int id, [FromBody]Dictionary<string, string> value)
         {
         }
 
