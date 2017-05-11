@@ -21,7 +21,7 @@ namespace Worklist_Server.Controllers
         [HttpGet("{id}")]
         public Dictionary<string, string> Get(string id)
         {
-            return Configuration.GetReadableWorklistItems().SingleOrDefault(i => i["Id"] == id);
+            return Configuration.GetReadableWorklistItems().SingleOrDefault(i => i["PatientID"] == id);
         }
 
         // POST api/worklistitems
