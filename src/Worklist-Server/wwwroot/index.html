@@ -13,8 +13,8 @@
 <body ng-controller="WorklistController">
     <div class="list-group">
         <a href="#" class="list-group-item" ng-repeat="item in items">
-            <h4 class="list-group-item-heading">{{item.Name}}</h4>
-            <p class="list-group-item-text">{{item.Id}}, station: {{item.ScheduledStationName}}, scheduled date: {{item.ScheduledDate}}, status: {{item.Status}}</p>
+            <h4 class="list-group-item-heading">{{item.PatientName}}</h4>
+            <p class="list-group-item-text">{{item.PatientID}}, station: {{item.ScheduledStationName}}, scheduled date: {{item.ScheduledProcedureStepStartDate}}, status: {{item.Status || "UNKNOWN"}}</p>
         </a>
     </div>
 </body>
