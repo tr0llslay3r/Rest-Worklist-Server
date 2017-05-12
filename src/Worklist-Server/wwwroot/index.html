@@ -5,17 +5,47 @@
     <title>Default Site</title>
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+    <script src="js/ui-bootstrap-tpls-2.5.0.min.js"></script>
     <script src="js/app.js"></script>
     <script src="js/controller.js"></script>
 </head>
-<body ng-controller="WorklistController">
-    <div class="list-group">
-        <a href="#" class="list-group-item" ng-repeat="item in items">
-            <h4 class="list-group-item-heading">{{item.PatientName}}</h4>
-            <p class="list-group-item-text">{{item.PatientID}}, station: {{item.ScheduledStationName}}, scheduled date: {{item.ScheduledProcedureStepStartDate}}, status: {{item.Status || "UNKNOWN"}}</p>
-        </a>
+<body ng-controller="WorklistController as $ctrl">
+<script type="text/ng-template" id="myModalContent.html">
+    <div class="modal-header">
+        <h3 class="modal-title" id="modal-title">{{$ctrl.selectedWorklistItem.PatientID}} : {{$ctrl.selectedWorklistItem.PatientName}}</h3>
     </div>
+    <div class="modal-body" id="modal-body">
+        <ul>
+            <li ng-repeat="(k,v) in $ctrl.selectedWorklistItem">
+                <span>{{k}} : {{v}}</span>
+            </li>
+        </ul>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" type="button" ng-click="$ctrl.ok()">OK</button>
+        <button class="btn btn-warning" type="button" ng-click="$ctrl.cancel()">Cancel</button>
+    </div>
+</script>
+<div class="container">
+    <div class="page-header">
+        <h1>Worklist Items <small>available as json at {{allWorklistItemsUrl}}</small></h1>
+    </div>
+    <div class="panel panel-primary">
+        <!-- Default panel contents -->
+        <div class="panel-heading">Worklist <span class="badge">{{items.length}}</span>
+        </div>
+        <div class="panel-body">
+            <div class="list-group">
+                <a href="#" class="list-group-item" ng-repeat="item in items" ng-click="$ctrl.open('lg', null, items[$index])">
+                    <h4 class="list-group-item-heading">{{item.PatientID}}: {{item.PatientName}}</h4>
+                    <p class="list-group-item-text">station: {{item.ScheduledStationName}}, scheduled date: {{item.ScheduledProcedureStepStartDate}}, status: {{item.Status || "UNKNOWN"}}</p>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 </body>
 </html>

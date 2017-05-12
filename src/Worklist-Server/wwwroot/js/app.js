@@ -1,5 +1,5 @@
 ﻿(function () {
     'use strict';
 
-    angular.module('WorklistApp', []);
+    angular.module('WorklistApp', ['ui.bootstrap']);
 })();
