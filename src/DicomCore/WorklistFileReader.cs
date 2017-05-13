@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using Dicom;
@@ -33,18 +32,67 @@ namespace DicomCore
 
                 var dataSet = new DicomDataset();
                 var sps = new DicomDataset();
+                
+                var dictDataset = new Dictionary<string, DicomTag>()
+                {
+                    {"AccessionNumber", DicomTag.AccessionNumber},
+                    {"AdmissionID", DicomTag.AdmissionID},
+                    {"Allergies", DicomTag.Allergies},
+                    {"CurrentPatientLocation", DicomTag.CurrentPatientLocation},
+                    {"InstitutionalDepartmentName", DicomTag.InstitutionalDepartmentName},
+                    {"MedicalAlerts", DicomTag.MedicalAlerts},
+                    {"OtherPatientIDs", DicomTag.OtherPatientIDs},
+                    {"PatientComments", DicomTag.PatientComments},
+                    {"PatientID", DicomTag.PatientID},
+                    {"PatientsBirthDate", DicomTag.PatientBirthDate},
+                    {"PatientsName", DicomTag.PatientName},
+                    {"PatientsSex", DicomTag.PatientSex},
+                    {"RequestedProcedureDescription", DicomTag.RequestedProcedureDescription},
+                    {"RequestedProcedureID", DicomTag.RequestedProcedureID},
+                    {"RequestingPhysician", DicomTag.RequestingPhysician},
+                    {"SpecialNeeds", DicomTag.SpecialNeeds},
+                    {"SpecificCharacterSet", DicomTag.SpecificCharacterSet},
+                    {"StudyDate", DicomTag.StudyDate},
+                    {"StudyDescription", DicomTag.StudyDescription},
+                    {"StudyInstanceUID", DicomTag.StudyInstanceUID},
+                };
 
-                //TODO: now add DicomDataSet from fileKeys and fileValues to datasets
-                //key must be parsed to DicomTag enum and value must be added to DataSet...
-                //dataSet.Add((DicomTag, value);
-                //sps is another dataset in the dataset, sps items must be put in there
+                var dictSps = new Dictionary<string, DicomTag>()
+                {
+                    {"ScheduledPerformingPhysiciansName", DicomTag.ScheduledPerformingPhysicianName},
+                    {"ScheduledProcedureStepDescription", DicomTag.ScheduledProcedureStepDescription},
+                    {"ScheduledProcedureStepID", DicomTag.ScheduledProcedureStepID},
+                    {"ScheduledProcedureStepStartDate", DicomTag.ScheduledProcedureStepStartDate},
+                    {"ScheduledProcedureStepStartTime", DicomTag.ScheduledProcedureStepStartTime},
+                    {"ScheduledStationAETitle", DicomTag.ScheduledStationAETitle},
+                    {"ScheduledStationName", DicomTag.ScheduledStationName},
+                    {"Modality", DicomTag.Modality},
 
+                };
+
+                for (int i = 0; i < fileKeys.Length -1; i++)
+                {
+                    if (dictDataset.ContainsKey(fileKeys[i]))
+                    {
+                        var tag = dictDataset[fileKeys[i]];
+                        dataSet.Add(tag, fileValues[i]);
+                    }
+                    else if (dictSps.ContainsKey(fileKeys[i]))
+                    {
+                        var tag = dictSps[fileKeys[i]];
+                        sps.Add(tag, fileValues[i]);
+                    }
+                    else
+                    {
+                        Debug.WriteLine("ERROR: Key is not in Dictionary: {0}", fileKeys[i]);
+                    }
+                }
+                
                 dataSet.Add(new DicomSequence(DicomTag.ScheduledProcedureStepSequence, sps));
                 datasets.Add(dataSet);
             }
 
-            //TODO return datasets
-            return RandomStuffFactory.CreateRandomDatasetList(10);
+            return datasets;
         }
     }
 }
