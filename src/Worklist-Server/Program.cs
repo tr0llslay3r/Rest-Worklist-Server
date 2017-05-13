@@ -3,7 +3,6 @@ using System.IO;
 using Dicom.Network;
 using DicomCore;
 using Microsoft.AspNetCore.Hosting;
-using System.Collections.Generic;
 
 namespace Worklist_Server
 {
@@ -33,8 +32,6 @@ namespace Worklist_Server
         private static void StartDicomServer()
         {
             Configuration.StationName = "EL_STATIONE";
-            Configuration.LogList = new List<LogItem>();
-            Configuration.WorklistItems = RandomStuffFactory.CreateRandomDatasetList(10);
 
             var m_server = DicomServer.Create<CFindSCP>(worklistport);
         }

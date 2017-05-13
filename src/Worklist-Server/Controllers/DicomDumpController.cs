@@ -12,11 +12,17 @@ namespace Worklist_Server.Controllers
     [Route("api/[controller]")]
     public class DicomDumpController : Controller
     {
+        private readonly WorklistRepository m_WorklistRepository;
+
+        public DicomDumpController()
+        {
+            m_WorklistRepository = new WorklistRepository();
+        }
         // GET: api/dicomdump
         [HttpGet]
         public string Get()
         {
-            var datasets = Configuration.WorklistItems.ToList();
+            var datasets = m_WorklistRepository.WorklistItems.ToList();
             
             var log = new StringBuilder();
 
@@ -36,7 +42,7 @@ namespace Worklist_Server.Controllers
         [HttpGet("{patientid}")]
         public string Get(string patientid)
         {
-            var dataset = Configuration.WorklistItems.FirstOrDefault(i => i.Get<string>(DicomTag.PatientID) == patientid);
+            var dataset = m_WorklistRepository.WorklistItems.FirstOrDefault(i => i.Get<string>(DicomTag.PatientID) == patientid);
             
             var log = new StringBuilder();
             IDicomDatasetWalker walkerTexasRanger = new DicomDatasetDumper(log);

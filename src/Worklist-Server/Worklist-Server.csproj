@@ -13,6 +13,7 @@
   <ItemGroup>
     <Content Include="wwwroot\js\app.js" />
     <Content Include="wwwroot\js\controller.js" />
+    <Content Include="wwwroot\js\ui-bootstrap-tpls-2.5.0.min.js" />
   </ItemGroup>
 
   <ItemGroup>

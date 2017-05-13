@@ -10,25 +10,31 @@ namespace Worklist_Server.Controllers
     [Route("api/[controller]")]
     public class WorklistItemsController : Controller
     {
+        private readonly WorklistRepository m_WorklistRepository;
+
+        public WorklistItemsController()
+        {
+            m_WorklistRepository = new WorklistRepository();
+        }
         // GET: api/worklistitems
         [HttpGet]
         public IEnumerable<Dictionary<string, string>> Get()
         {
-            return Configuration.GetReadableWorklistItems();
+            return m_WorklistRepository.GetReadableWorklistItems();
         }
 
         // GET api/worklistitems/5
         [HttpGet("{id}")]
         public Dictionary<string, string> Get(string id)
         {
-            return Configuration.GetReadableWorklistItems().SingleOrDefault(i => i["PatientID"] == id);
+            return m_WorklistRepository.GetReadableWorklistItems().SingleOrDefault(i => i["PatientID"] == id);
         }
 
         // POST api/worklistitems
         [HttpPost]
         public void Post([FromBody]Dictionary<string, string> value)
         {
-            Configuration.GetReadableWorklistItems().Add(value);
+            m_WorklistRepository.GetReadableWorklistItems().Add(value);
         }
 
         // PUT api/worklistitems/5

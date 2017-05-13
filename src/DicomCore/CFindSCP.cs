@@ -11,9 +11,11 @@ namespace DicomCore
     public class CFindSCP : DicomService, IDicomServiceProvider, IDicomCEchoProvider, IDicomCFindProvider, IDicomNServiceProvider
 
     {
+        private readonly WorklistRepository m_WorklistRepository;
         public CFindSCP(INetworkStream stream, Encoding fallbackEncoding, Logger log)
             : base(stream, fallbackEncoding, log)
         {
+            m_WorklistRepository = new WorklistRepository();
         }
 
         public void OnReceiveAssociationRequest(DicomAssociation association)
@@ -54,12 +56,10 @@ namespace DicomCore
             IDicomDatasetWalker walkerTexasRanger = new DicomDatasetDumper(log);
             new DicomDatasetWalker(request.Dataset).Walk(walkerTexasRanger);
             
-            var description = string.Format("C-FIND -> {0}", request.Dataset.Get<DicomSequence>(DicomTag.ScheduledProcedureStepSequence).First().Get(DicomTag.ScheduledProcedureStepStartDate, "NONE"));
-
-            Configuration.LogList.Add(new LogItem() {Description = description, Item = log.ToString()});
-
+            //var description = string.Format("C-FIND -> {0}", request.Dataset.Get<DicomSequence>(DicomTag.ScheduledProcedureStepSequence).First().Get(DicomTag.ScheduledProcedureStepStartDate, "NONE"));
+            
             List<DicomCFindResponse> responses = new List<DicomCFindResponse>();
-            var results = Configuration.WorklistItems;
+            var results = m_WorklistRepository.WorklistItems;
             
             foreach (DicomDataset result in results)
             {
@@ -87,24 +87,24 @@ namespace DicomCore
             return resp;
         }
 
-        private static void UpdateMppsStatusInLocalCollections(DicomRequest request)
+        private void UpdateMppsStatusInLocalCollections(DicomRequest request)
         {
             var description = string.Format("{0} -> {1}", request.Dataset.Get<string>(DicomTag.PatientID), request.Dataset.Get<string>(DicomTag.PerformedProcedureStepStatus));
             
             var patientId = request.Dataset.Get<string>(DicomTag.PatientID);
             var status = request.Dataset.Get<string>(DicomTag.PerformedProcedureStepStatus);
 
-            var item = Configuration.WorklistItems.Single(w => w.Get<string>(DicomTag.PatientID).Equals(patientId));
+            var item = m_WorklistRepository.WorklistItems.Single(w => w.Get<string>(DicomTag.PatientID).Equals(patientId));
 
             item.AddOrUpdate(DicomTag.PerformedProcedureStepStatus, status);
 
             SetMppsStatusFromItem(item);
         }
 
-        private static void SetMppsStatusFromItem(DicomDataset item)
+        private void SetMppsStatusFromItem(DicomDataset item)
         {
             //TODO: modify the real list (Configuration.WorklistItems), not the readonly dumped list
-            Configuration.GetReadableWorklistItems().Single(o => o["Id"].Equals(item.Get<string>(DicomTag.PatientID)))["Status"] =
+            m_WorklistRepository.GetReadableWorklistItems().Single(o => o["Id"].Equals(item.Get<string>(DicomTag.PatientID)))["Status"] =
                 item.Get<string>(DicomTag.PerformedProcedureStepStatus);
         }
 
