@@ -32,54 +32,19 @@ namespace DicomCore
 
                 var dataSet = new DicomDataset();
                 var sps = new DicomDataset();
+
+                var mappingConfiguration = new WorklistConfiguration();
                 
-                var dictDataset = new Dictionary<string, DicomTag>()
-                {
-                    {"AccessionNumber", DicomTag.AccessionNumber},
-                    {"AdmissionID", DicomTag.AdmissionID},
-                    {"Allergies", DicomTag.Allergies},
-                    {"CurrentPatientLocation", DicomTag.CurrentPatientLocation},
-                    {"InstitutionalDepartmentName", DicomTag.InstitutionalDepartmentName},
-                    {"MedicalAlerts", DicomTag.MedicalAlerts},
-                    {"OtherPatientIDs", DicomTag.OtherPatientIDs},
-                    {"PatientComments", DicomTag.PatientComments},
-                    {"PatientID", DicomTag.PatientID},
-                    {"PatientsBirthDate", DicomTag.PatientBirthDate},
-                    {"PatientsName", DicomTag.PatientName},
-                    {"PatientsSex", DicomTag.PatientSex},
-                    {"RequestedProcedureDescription", DicomTag.RequestedProcedureDescription},
-                    {"RequestedProcedureID", DicomTag.RequestedProcedureID},
-                    {"RequestingPhysician", DicomTag.RequestingPhysician},
-                    {"SpecialNeeds", DicomTag.SpecialNeeds},
-                    {"SpecificCharacterSet", DicomTag.SpecificCharacterSet},
-                    {"StudyDate", DicomTag.StudyDate},
-                    {"StudyDescription", DicomTag.StudyDescription},
-                    {"StudyInstanceUID", DicomTag.StudyInstanceUID},
-                };
-
-                var dictSps = new Dictionary<string, DicomTag>()
-                {
-                    {"ScheduledPerformingPhysiciansName", DicomTag.ScheduledPerformingPhysicianName},
-                    {"ScheduledProcedureStepDescription", DicomTag.ScheduledProcedureStepDescription},
-                    {"ScheduledProcedureStepID", DicomTag.ScheduledProcedureStepID},
-                    {"ScheduledProcedureStepStartDate", DicomTag.ScheduledProcedureStepStartDate},
-                    {"ScheduledProcedureStepStartTime", DicomTag.ScheduledProcedureStepStartTime},
-                    {"ScheduledStationAETitle", DicomTag.ScheduledStationAETitle},
-                    {"ScheduledStationName", DicomTag.ScheduledStationName},
-                    {"Modality", DicomTag.Modality},
-
-                };
-
                 for (int i = 0; i < fileKeys.Length -1; i++)
                 {
-                    if (dictDataset.ContainsKey(fileKeys[i]))
+                    if (mappingConfiguration.WorklistTags.ContainsKey(fileKeys[i]))
                     {
-                        var tag = dictDataset[fileKeys[i]];
+                        var tag = mappingConfiguration.WorklistTags[fileKeys[i]];
                         dataSet.Add(tag, fileValues[i]);
                     }
-                    else if (dictSps.ContainsKey(fileKeys[i]))
+                    else if (mappingConfiguration.SpsTags.ContainsKey(fileKeys[i]))
                     {
-                        var tag = dictSps[fileKeys[i]];
+                        var tag = mappingConfiguration.SpsTags[fileKeys[i]];
                         sps.Add(tag, fileValues[i]);
                     }
                     else

@@ -11,9 +11,18 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Include="wwwroot\config.html" />
     <Content Include="wwwroot\js\app.js" />
+    <Content Include="wwwroot\js\configurationcontroller.js" />
+    <Content Include="wwwroot\js\controller - Kopieren.js" />
     <Content Include="wwwroot\js\controller.js" />
     <Content Include="wwwroot\js\ui-bootstrap-tpls-2.5.0.min.js" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="tagmap.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
   <ItemGroup>
