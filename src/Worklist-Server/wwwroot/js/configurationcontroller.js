@@ -19,9 +19,15 @@
             console.log("err: ");
             return console.log(err);
         });
-
-        activate();
-
-        function activate() { }
+        
+        $scope.saveConfig = function () {
+            console.log($scope.tagmap);
+            $http.post(tagmapUrl, $scope.tagmap).then(function (res) {
+                
+                console.log("config saved");
+            }, function(err) {
+                console.log("error saving config");
+            });
+        }
     }
 })();
