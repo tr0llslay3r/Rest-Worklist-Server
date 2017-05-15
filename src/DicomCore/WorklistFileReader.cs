@@ -10,7 +10,7 @@ namespace DicomCore
         public IEnumerable<DicomDataset> ReadWorklistItems()
         {
             List<DicomDataset> datasets = new List<DicomDataset>();
-            foreach (string fileName in Directory.GetFiles(@"K:\worklist", "*.*", SearchOption.TopDirectoryOnly))
+            foreach (string fileName in Directory.GetFiles(@"D:\worklist", "*.*", SearchOption.TopDirectoryOnly))
             {
                 Debug.WriteLine("Reading file: " + fileName);
                 var fileLines = File.ReadAllLines(fileName);

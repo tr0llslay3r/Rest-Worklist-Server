@@ -41,15 +41,6 @@ namespace DicomCore
                         }
                     }
                 }
-                //wi.Add("Name", worklistItem.Get<string>(DicomTag.PatientName));
-                //wi.Add("Id", worklistItem.Get<string>(DicomTag.PatientID));
-                //wi.Add("Status", worklistItem.Get(DicomTag.PerformedProcedureStepStatus, "UNKNOWN"));
-                //wi.Add("ScheduledDate",
-                //    worklistItem.Get<DicomSequence>(DicomTag.ScheduledProcedureStepSequence).First()
-                //        .Get<string>(DicomTag.ScheduledProcedureStepStartDate));
-                //wi.Add("ScheduledStationName",
-                //    worklistItem.Get<DicomSequence>(DicomTag.ScheduledProcedureStepSequence).First()
-                //        .Get<string>(DicomTag.ScheduledStationName));
 
                 myCollection.Add(wi);
             }
