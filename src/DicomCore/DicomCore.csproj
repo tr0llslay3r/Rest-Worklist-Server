@@ -1,10 +1,10 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard1.6</TargetFramework>
+    <TargetFramework>netstandard2.0</TargetFramework>
     <AssemblyName>DicomCore</AssemblyName>
     <PackageId>DicomCore</PackageId>
-    <NetStandardImplicitPackageVersion>1.6.0</NetStandardImplicitPackageVersion>
+    <NetStandardImplicitPackageVersion>1.6.1</NetStandardImplicitPackageVersion>
     <PackageTargetFallback>$(PackageTargetFallback);dnxcore50</PackageTargetFallback>
     <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
     <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
