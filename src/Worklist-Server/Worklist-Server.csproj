@@ -7,7 +7,6 @@
     <OutputType>Exe</OutputType>
     <PackageId>Worklist-Server</PackageId>
     <RuntimeFrameworkVersion>3.0.0</RuntimeFrameworkVersion>
-    <PackageTargetFallback>$(PackageTargetFallback);dotnet5.6;portable-net45+win8</PackageTargetFallback>
     <StartupObject>Worklist_Server.Program</StartupObject>
   </PropertyGroup>
 
